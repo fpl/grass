@@ -72,6 +72,8 @@ static struct menu menu[] = {
     {c_quart3, w_quart3, NO_CATS, 1, 0, T_FLOAT, "quart3", "third quartile"},
     {c_perc90, w_perc90, NO_CATS, 1, 0, T_FLOAT, "perc90", "ninetieth percentile"},
     {c_quant, w_quant, NO_CATS, 1, 0, T_FLOAT, "quantile", "arbitrary quantile"},
+    {c_ave_ge_quant, w_ave_ge_quant, NO_CATS, 1, 0, T_FLOAT, "average_ge_quantile", "average of arbitrary quantile"},
+    {c_ave_le_quant, w_ave_le_quant, NO_CATS, 1, 0, T_FLOAT, "average_le_quantile", "average of arbitrary quantile"},
     {0, 0, 0, 0, 0, 0, 0, 0}
 };
 
@@ -236,7 +238,7 @@ int main(int argc, char *argv[])
     parm.quantile->type = TYPE_DOUBLE;
     parm.quantile->required = NO;
     parm.quantile->multiple = YES;
-    parm.quantile->description = _("Quantile to calculate for method=quantile");
+    parm.quantile->description = _("Quantile to calculate for method=quantile,average_le_quantile,average_ge_quantile");
     parm.quantile->options = "0.0-1.0";
 
     flag.align = G_define_flag();

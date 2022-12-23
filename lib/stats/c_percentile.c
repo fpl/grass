@@ -26,6 +26,92 @@ void c_quant(DCELL * result, DCELL * values, int n, const void *closure)
 	: values[i0] * (i1 - k) + values[i1] * (k - i0);
 }
 
+void c_ave_ge_quant(DCELL * result, DCELL * values, int n, const void *closure)
+{
+    double quant = *(const double *)closure;
+    double k;
+    int i0, i1;
+    DCELL q;
+    DCELL sum;
+    int count;
+    int i;
+
+    n = sort_cell(values, n);
+
+    if (n < 1) {
+	Rast_set_d_null_value(result, 1);
+	return;
+    }
+
+    k = n * quant;
+    i0 = (int)floor(k);
+    i1 = (int)ceil(k);
+
+    q = (i0 == i1)
+	? values[i0]
+	: values[i0] * (i1 - k) + values[i1] * (k - i0);
+
+    sum = 0.0;
+    count = 0;
+    for (i = 0; i < n; i++) {
+        if (Rast_is_d_null_value(&values[i]))
+            continue;
+
+        if (values[i] >= q) {
+            sum += values[i];
+            count++;
+        }
+    }
+
+    if (count == 0)
+	Rast_set_d_null_value(result, 1);
+    else
+	*result = sum / count;
+}
+
+void c_ave_le_quant(DCELL * result, DCELL * values, int n, const void *closure)
+{
+    double quant = *(const double *)closure;
+    double k;
+    int i0, i1;
+    DCELL q;
+    DCELL sum;
+    int count;
+    int i;
+
+    n = sort_cell(values, n);
+
+    if (n < 1) {
+	Rast_set_d_null_value(result, 1);
+	return;
+    }
+
+    k = n * quant;
+    i0 = (int)floor(k);
+    i1 = (int)ceil(k);
+
+    q = (i0 == i1)
+	? values[i0]
+	: values[i0] * (i1 - k) + values[i1] * (k - i0);
+
+    sum = 0.0;
+    count = 0;
+    for (i = 0; i < n; i++) {
+        if (Rast_is_d_null_value(&values[i]))
+            continue;
+
+        if (values[i] <= q) {
+            sum += values[i];
+            count++;
+        }
+    }
+
+    if (count == 0)
+	Rast_set_d_null_value(result, 1);
+    else
+	*result = sum / count;
+}
+
 void c_quart1(DCELL * result, DCELL * values, int n, const void *closure)
 {
     static const double q = 0.25;
@@ -70,6 +156,100 @@ void w_quant(DCELL * result, DCELL(*values)[2], int n, const void *closure)
     }
 
     *result = values[i][0];
+}
+
+void w_ave_ge_quant(DCELL * result, DCELL(*values)[2], int n, const void *closure)
+{
+    double quant = *(const double *)closure;
+    DCELL total;
+    int i, count;
+    DCELL k;
+    DCELL q;
+    DCELL sum;
+
+    n = sort_cell_w(values, n);
+
+    if (n < 1) {
+	Rast_set_d_null_value(result, 1);
+	return;
+    }
+
+    total = 0.0;
+    for (i = 0; i < n; i++)
+	total += values[i][1];
+
+    k = 0.0;
+    for (i = 0; i < n; i++) {
+	k += values[i][1];
+	if (k >= total * quant)
+	    break;
+    }
+
+    q = values[i][0];
+
+    sum = 0.0;
+    count = 0;
+    for (i = 0; i < n; i++) {
+        if (Rast_is_d_null_value(&values[i][0]))
+            continue;
+
+        if (values[i][0] >= q) {
+            sum += values[i][0];
+            count++;
+        }
+    }
+
+    if (count == 0)
+	Rast_set_d_null_value(result, 1);
+    else
+	*result = sum / count;
+}
+
+void w_ave_le_quant(DCELL * result, DCELL(*values)[2], int n, const void *closure)
+{
+    double quant = *(const double *)closure;
+    DCELL total;
+    int i, count;
+    DCELL k;
+    DCELL q;
+    DCELL sum;
+
+    n = sort_cell_w(values, n);
+
+    if (n < 1) {
+	Rast_set_d_null_value(result, 1);
+	return;
+    }
+
+    total = 0.0;
+    for (i = 0; i < n; i++)
+	total += values[i][1];
+
+    k = 0.0;
+    for (i = 0; i < n; i++) {
+	k += values[i][1];
+	if (k >= total * quant)
+	    break;
+    }
+
+    q = values[i][0];
+
+    sum = 0.0;
+    count = 0;
+    for (i = 0; i < n; i++) {
+        if (Rast_is_d_null_value(&values[i][0]))
+            continue;
+
+        if (values[i][0] <= q) {
+            sum += values[i][0];
+            count++;
+        }
+    }
+
+    if (count == 0)
+	Rast_set_d_null_value(result, 1);
+    else
+	*result = sum / count;
 }
 
 void w_quart1(DCELL * result, DCELL(*values)[2], int n, const void *closure)
