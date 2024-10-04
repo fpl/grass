@@ -666,8 +666,6 @@ class RenderMapMgr(wx.EvtHandler):
 
         Make image composiotion, emits updateMap event.
         """
-        stopTime = time.time()
-
         maps = []
         masks = []
         opacities = []
@@ -706,7 +704,7 @@ class RenderMapMgr(wx.EvtHandler):
                 self._rendering = False
                 if wx.IsBusy():
                     wx.EndBusyCursor()
-                raise GException(_("Rendering failed: %s" % msg))
+                raise GException(_("Rendering failed: %s") % msg)
 
         stop = time.time()
         Debug.msg(
@@ -898,7 +896,7 @@ class Map:
             env["GISDBASE"], env["LOCATION_NAME"], env["MAPSET"], "WIND"
         )
         try:
-            windfile = open(filename, "r")
+            windfile = open(filename)
         except OSError as e:
             sys.exit(
                 _("Error: Unable to open '%(file)s'. Reason: %(ret)s. wxGUI exited.\n")
@@ -1239,7 +1237,7 @@ class Map:
 
             return grass_region
 
-        except:
+        except Exception:
             return None
 
     def GetListOfLayers(
