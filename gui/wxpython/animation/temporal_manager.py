@@ -116,8 +116,7 @@ class TemporalManager:
 
         # check for units for relative type
         if relative:
-            units = set()
-            units.update(infoDict["unit"] for infoDict in self.timeseriesInfo.values())
+            units = {infoDict["unit"] for infoDict in self.timeseriesInfo.values()}
             if len(units) > 1:
                 message = _(
                     "It is not allowed to display data with different units (%s)."
@@ -162,10 +161,11 @@ class TemporalManager:
             return self._getCommonGranularity()
 
     def _getCommonGranularity(self):
-        allMaps = []
-        for dataset in self.timeseriesList:
-            maps = self.timeseriesInfo[dataset]["maps"]
-            allMaps.extend(maps)
+        allMaps = [
+            a
+            for dataset in self.timeseriesList
+            for a in self.timeseriesInfo[dataset]["maps"]
+        ]
 
         if self.temporalType == TemporalType.ABSOLUTE:
             gran = tgis.compute_absolute_time_granularity(allMaps)
@@ -210,9 +210,9 @@ class TemporalManager:
             newMapList[i : i + len(mapList)] = mapList
             newMapLists.append(newMapList)
 
-        mapDict = {}
-        for i, dataset in enumerate(self.timeseriesList):
-            mapDict[dataset] = newMapLists[i]
+        mapDict = {
+            dataset: newMapLists[i] for i, dataset in enumerate(self.timeseriesList)
+        }
 
         if self.temporalType == TemporalType.ABSOLUTE:
             # ('1996-01-01 00:00:00', '1997-01-01 00:00:00', 'year'),
@@ -259,10 +259,8 @@ class TemporalManager:
 
         elif self.temporalType == TemporalType.RELATIVE:
             unit = self.timeseriesInfo[timeseries]["unit"]
-            if self.granularityMode == GranularityMode.ONE_UNIT:
-                gran = 1
-            else:
-                gran = granNum
+            gran = 1 if self.granularityMode == GranularityMode.ONE_UNIT else granNum
+
         # start sampling - now it can be used for both interval and point data
         # after instance, there can be a gap or an interval
         # if it is a gap we remove it and put there the previous instance instead
@@ -299,10 +297,9 @@ class TemporalManager:
                         # skip this one, already there
                         followsPoint = False
                         continue
-                    else:
-                        # append the last one (of point time)
-                        listOfMaps.append(lastTimeseries)
-                        end = None
+                    # append the last one (of point time)
+                    listOfMaps.append(lastTimeseries)
+                    end = None
                 else:
                     # append series which is None
                     listOfMaps.append(series)

@@ -15,6 +15,8 @@
 
 import os
 import atexit
+from pathlib import Path
+
 import grass.script as gs
 
 
@@ -23,21 +25,19 @@ tmp_grad_rel = None
 
 
 def cleanup():
+    names = []
     if tmp_grad_rel:
-        gs.run_command(
-            "g.remove", flags="f", type="raster", name=tmp_grad_rel, quiet=True
-        )
+        names.append(tmp_grad_rel)
     if tmp_grad_abs:
+        names.append(tmp_grad_abs)
+    if len(names) > 0:
         gs.run_command(
-            "g.remove", flags="f", type="raster", name=tmp_grad_abs, quiet=True
+            "g.remove", flags="f", type="raster", name=",".join(names), quiet=True
         )
 
 
 def make_gradient(path):
-    fh = open(path)
-    text = fh.read()
-    fh.close()
-
+    text = Path(path).read_text()
     lines = text.splitlines()
     records = []
     for line in lines:
