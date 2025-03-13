@@ -9,6 +9,8 @@ for details.
 :authors: Vaclav Petras
 """
 
+from __future__ import annotations
+
 import os
 import datetime
 from pathlib import Path
@@ -52,8 +54,9 @@ def replace_in_file(file_path, pattern, repl):
     # using tmp file to store the replaced content
     tmp_file_path = file_path + ".tmp"
     with open(file_path) as old_file, open(tmp_file_path, "w") as new_file:
-        for line in old_file:
-            new_file.write(re.sub(pattern=pattern, string=line, repl=repl))
+        new_file.writelines(
+            re.sub(pattern=pattern, string=line, repl=repl) for line in old_file
+        )
     # remove old file since it must not exist for rename/move
     os.remove(file_path)
     # replace old file by new file
@@ -277,9 +280,7 @@ def get_html_test_authors_table(directory, tests_authors):
         not_testing_authors = tested_dir_authors - tests_authors
     else:
         no_svn_text = (
-            '<span style="font-size: 60%">'
-            "Authors cannot be obtained using SVN."
-            "</span>"
+            '<span style="font-size: 60%">Authors cannot be obtained using SVN.</span>'
         )
         not_testing_authors = tested_dir_authors = [no_svn_text]
     if not not_testing_authors:
@@ -438,7 +439,7 @@ def percent_to_html(percent):
         color = "orange"
     else:
         color = "green"
-    return '<span style="color: {color}">{percent:.0f}%</span>'.format(
+    return '<span style="color: {color}">{percent:.1f}%</span>'.format(
         percent=percent, color=color
     )
 
@@ -448,8 +449,7 @@ def wrap_stdstream_to_html(infile, outfile, module, stream):
     after = "</pre></body></html>"
     with open(outfile, "w") as html, open(infile) as text:
         html.write(before)
-        for line in text:
-            html.write(color_error_line(html_escape(line)))
+        html.writelines(color_error_line(html_escape(line)) for line in text)
         html.write(after)
 
 
@@ -516,8 +516,7 @@ def success_to_html_text(total, successes):
         # alternatives: SUCCEEDED, passed, OK
         return '<span style="color: green">succeeded</span>'
     return (
-        '<span style="color: red; font-size: 60%">'
-        "? more successes than total ?</span>"
+        '<span style="color: red; font-size: 60%">? more successes than total ?</span>'
     )
 
 
@@ -529,6 +528,12 @@ def success_to_html_percent(total, successes):
         pass_per = 100 * (float(successes) / total)
         return percent_to_html(pass_per)
     return UNKNOWN_NUMBER_HTML
+
+
+def format_percentage(percentage: float | None) -> str:
+    if percentage is not None:
+        return "{nsper:.1f}%".format(nsper=percentage)
+    return "unknown percentage"
 
 
 class GrassTestFilesHtmlReporter(GrassTestFilesCountingReporter):
@@ -559,9 +564,7 @@ class GrassTestFilesHtmlReporter(GrassTestFilesCountingReporter):
         svn_info = get_svn_info()
         if not svn_info:
             svn_text = (
-                '<span style="font-size: 60%">'
-                "SVN revision cannot be obtained"
-                "</span>"
+                '<span style="font-size: 60%">SVN revision cannot be obtained</span>'
             )
         else:
             url = get_source_url(
@@ -607,17 +610,9 @@ class GrassTestFilesHtmlReporter(GrassTestFilesCountingReporter):
             )
         )
 
-        # this is the second place with this function
-        # TODO: provide one implementation
-        def format_percentage(percentage):
-            if percentage is not None:
-                return "{nsper:.0f}%".format(nsper=percentage)
-            return "unknown percentage"
-
         summary_sentence = (
             "\nExecuted {nfiles} test files in {time:}."
-            "\nFrom them"
-            " {nsfiles} files ({nsper}) were successful"
+            "\nFrom them, {nsfiles} files ({nsper}) were successful"
             " and {nffiles} files ({nfper}) failed.\n".format(
                 nfiles=self.test_files,
                 time=self.main_time,
@@ -629,9 +624,9 @@ class GrassTestFilesHtmlReporter(GrassTestFilesCountingReporter):
         )
 
         self.main_index.write(
-            "<tbody>{tfoot}</table>"
-            "<p>{summary}</p>"
-            "</body></html>".format(tfoot=tfoot, summary=summary_sentence)
+            "<tbody>{tfoot}</table><p>{summary}</p></body></html>".format(
+                tfoot=tfoot, summary=summary_sentence
+            )
         )
         self.main_index.close()
 
@@ -795,8 +790,10 @@ class GrassTestFilesHtmlReporter(GrassTestFilesCountingReporter):
             file_index.write(files_section)
 
             if supplementary_files:
-                for f in supplementary_files:
-                    file_index.write('<li><a href="{f}">{f}</a></li>'.format(f=f))
+                file_index.writelines(
+                    '<li><a href="{f}">{f}</a></li>'.format(f=f)
+                    for f in supplementary_files
+                )
 
             file_index.write("</ul>")
 
@@ -952,11 +949,6 @@ class GrassTestFilesTextReporter(GrassTestFilesCountingReporter):
 
     def finish(self):
         super().finish()
-
-        def format_percentage(percentage):
-            if percentage is not None:
-                return "{nsper:.0f}%".format(nsper=percentage)
-            return "unknown percentage"
 
         summary_sentence = (
             "\nExecuted {nfiles} test files in {time:}."
