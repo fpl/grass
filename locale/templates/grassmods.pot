@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-09 15:41+0000\n"
+"POT-Creation-Date: 2025-08-23 15:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2388,8 +2388,8 @@ msgstr ""
 
 #: ../display/d.graph/do_graph.c:105 ../display/d.graph/do_graph.c:350
 #: ../display/d.graph/do_graph.c:365 ../display/d.graph/main.c:103
-#: ../display/d.labels/color.c:65 ../display/d.legend.vect/draw.c:201
-#: ../display/d.legend.vect/draw.c:212 ../display/d.rast/display.c:25
+#: ../display/d.labels/color.c:65 ../display/d.legend.vect/draw.c:202
+#: ../display/d.legend.vect/draw.c:213 ../display/d.rast/display.c:25
 #: ../raster/r.out.png/main.c:174
 #, c-format
 msgid "[%s]: No such color"
@@ -2822,7 +2822,7 @@ msgstr ""
 msgid "Unable to open label file <%s>"
 msgstr ""
 
-#: ../display/d.legend.vect/draw.c:77 ../display/d.legend.vect/main.c:266
+#: ../display/d.legend.vect/draw.c:78 ../display/d.legend.vect/main.c:266
 #: ../display/d.linegraph/main.c:409 ../display/d.linegraph/main.c:427
 #: ../display/d.linegraph/main.c:726 ../display/d.text/main.c:368
 #: ../display/d.where/main.c:168 ../general/g.cairocomp/main.c:46
@@ -2838,11 +2838,11 @@ msgstr ""
 msgid "Unable to open input file <%s>"
 msgstr ""
 
-#: ../display/d.legend.vect/draw.c:185
+#: ../display/d.legend.vect/draw.c:186
 msgid "Cannot read symbol"
 msgstr ""
 
-#: ../display/d.legend.vect/draw.c:246
+#: ../display/d.legend.vect/draw.c:247
 msgid "Invalid value for color type in legend file. Use one of 'lf' or 'ps'."
 msgstr ""
 
@@ -4399,7 +4399,7 @@ msgstr ""
 #: ../vector/v.buffer/main.c:422 ../vector/v.colors/read_rgb.c:23
 #: ../vector/v.colors/scan_attr.c:24 ../vector/v.colors/write_rgb.c:20
 #: ../vector/v.distance/main.c:590 ../vector/v.edit/select.c:499
-#: ../vector/v.extrude/main.c:223 ../vector/v.generalize/misc.c:167
+#: ../vector/v.extrude/main.c:223 ../vector/v.generalize/misc.c:168
 #: ../vector/v.neighbors/main.c:219 ../vector/v.overlay/main.c:422
 #: ../vector/v.surf.bspline/crosscorr.c:123 ../vector/v.to.rast/support.c:101
 #: ../vector/v.to.rast/support.c:271 ../vector/v.to.rast/support.c:499
@@ -4814,6 +4814,11 @@ msgstr ""
 msgid "Topology level required for drawing centroids for OGR layers"
 msgstr ""
 
+#: ../display/d.vect/legend.c:18 ../display/d.vect/main.c:367
+#, c-format
+msgid "Map name <%s> is too long"
+msgstr ""
+
 #: ../display/d.vect/lines.c:114
 msgid "Unable to display features by id, topology not available. Please try to rebuild topology using v.build or v.build.all."
 msgstr ""
@@ -5009,32 +5014,32 @@ msgstr ""
 msgid "Region size is greater than maxreg, nothing displayed"
 msgstr ""
 
-#: ../display/d.vect/main.c:373
+#: ../display/d.vect/main.c:376
 #, c-format
 msgid "The -%c flag and <%s> option cannot be used together, the -%c flag will be ignored!"
 msgstr ""
 
-#: ../display/d.vect/main.c:398 ../display/d.vect/main.c:404
+#: ../display/d.vect/main.c:401 ../display/d.vect/main.c:407
 #, c-format
 msgid "Option <%s> must be > 0"
 msgstr ""
 
-#: ../display/d.vect/main.c:409
+#: ../display/d.vect/main.c:412
 #, c-format
 msgid "%d error in cat option"
 msgid_plural "%d errors in cat option"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ../display/d.vect/main.c:426
+#: ../display/d.vect/main.c:429
 msgid "Plotting..."
 msgstr ""
 
-#: ../display/d.vect/main.c:438
+#: ../display/d.vect/main.c:441
 msgid "The bounding box of the map is outside the current region, nothing drawn"
 msgstr ""
 
-#: ../display/d.vect/main.c:510
+#: ../display/d.vect/main.c:513
 msgid "Rendering failed"
 msgstr ""
 
@@ -21134,7 +21139,7 @@ msgstr ""
 #: ../raster/r.in.bin/main.c:115 ../raster/r.in.bin/main.c:117
 #: ../raster/r.in.bin/main.c:119 ../raster/r.in.bin/main.c:121
 #: ../raster/r.in.bin/main.c:647 ../raster/r.in.gridatb/file_io.c:21
-#: ../raster/r.in.gridatb/file_io.c:27 ../raster/r.in.gridatb/file_io.c:61
+#: ../raster/r.in.gridatb/file_io.c:29 ../raster/r.in.gridatb/file_io.c:63
 #: ../raster/r.in.mat/main.c:133 ../raster/r.in.mat/main.c:155
 #: ../raster/r.in.mat/main.c:175 ../raster/r.in.mat/main.c:177
 #: ../raster/r.in.mat/main.c:183 ../raster/r.in.mat/main.c:189
@@ -21597,15 +21602,20 @@ msgstr ""
 msgid "Unable to open file: %s"
 msgstr ""
 
-#: ../raster/r.in.gridatb/file_io.c:40
+#: ../raster/r.in.gridatb/file_io.c:24
+#, c-format
+msgid "Unexpected end of file while reading %s"
+msgstr ""
+
+#: ../raster/r.in.gridatb/file_io.c:42
 msgid "Setting window header failed"
 msgstr ""
 
-#: ../raster/r.in.gridatb/file_io.c:43
+#: ../raster/r.in.gridatb/file_io.c:45
 msgid "Rows changed"
 msgstr ""
 
-#: ../raster/r.in.gridatb/file_io.c:46
+#: ../raster/r.in.gridatb/file_io.c:48
 msgid "Cols changed"
 msgstr ""
 
@@ -35109,7 +35119,7 @@ msgstr ""
 
 #: ../scripts/v.db.reconnect.all/v.db.reconnect.all.py:144
 #: ../vector/v.decimate/copy_tab.c:101 ../vector/v.extract/copy_tab.c:106
-#: ../vector/v.generalize/misc.c:180 ../vector/v.to.points/main.c:187
+#: ../vector/v.generalize/misc.c:181 ../vector/v.to.points/main.c:187
 #, c-format, python-format
 msgid "Unable to copy table <%s>"
 msgstr ""
@@ -38819,7 +38829,7 @@ msgstr ""
 msgid "Number of vertices for selected features changed from %d to %d (%d%% remaining)"
 msgstr ""
 
-#: ../vector/v.generalize/misc.c:163
+#: ../vector/v.generalize/misc.c:164
 #, c-format
 msgid "Layer %d"
 msgstr ""
