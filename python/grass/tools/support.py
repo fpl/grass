@@ -24,22 +24,97 @@ from __future__ import annotations
 import json
 import shutil
 from io import StringIO
+from collections import namedtuple
+
+try:
+    import numpy as np
+except ImportError:
+    np = None
 
 import grass.script as gs
 
+try:
+    import grass.script.array as ga
+except ImportError:
+    # While np and ga are separate here, later, we will assume that if np is present,
+    # ga is present as well because that's the only import-time failure we expect.
+    ga = None
+
 
 class ParameterConverter:
+    """Converts parameter values to strings and facilitates flow of the data."""
+
     def __init__(self):
         self._numpy_inputs = {}
-        self._numpy_outputs = {}
+        self._numpy_outputs = []
         self._numpy_inputs_ordered = []
         self.stdin = None
+        self.result = None
+        self.temporary_rasters = []
 
     def process_parameters(self, kwargs):
+        """Converts high level parameter values to strings.
+
+        Converts io.StringIO to dash and stores the string in the *stdin* attribute.
+        Replaces NumPy arrays by temporary raster names and stores the arrays.
+        Replaces NumPy array types by temporary raster names.
+
+        Temporary names are accessible in the *temporary_rasters* attribute and need
+        to be cleaned.
+        The functions *translate_objects_to_data* and *translate_data_to_objects*
+        need to be called before and after the computation to do the translations
+        from NumPy arrays to GRASS data and from GRASS data to NumPy arrays.
+
+        Simple type conversions from numbers and iterables to strings are expected to
+        be done by lower level code.
+        """
         for key, value in kwargs.items():
-            if isinstance(value, StringIO):
+            if np and isinstance(value, np.ndarray):
+                name = gs.append_uuid("tmp_serialized_input_array")
+                kwargs[key] = name
+                self._numpy_inputs[key] = (name, value)
+            elif np and value in (np.ndarray, np.array, ga.array):
+                # We test for class or the function.
+                name = gs.append_uuid("tmp_serialized_output_array")
+                kwargs[key] = name
+                self._numpy_outputs.append((name, key, value))
+            elif isinstance(value, StringIO):
                 kwargs[key] = "-"
                 self.stdin = value.getvalue()
+
+    def translate_objects_to_data(self, kwargs, env):
+        """Convert NumPy arrays to GRASS data"""
+        for name, value in self._numpy_inputs.values():
+            map2d = ga.array(env=env)
+            map2d[:] = value
+            map2d.write(name)
+            self.temporary_rasters.append(name)
+
+    def translate_data_to_objects(self, kwargs, env):
+        """Convert GRASS data to NumPy arrays
+
+        Returns True if there is one or more output arrays, False otherwise.
+        The arrays are stored in the *result* attribute.
+        """
+        output_arrays = []
+        output_arrays_dict = {}
+        for name, key, unused in self._numpy_outputs:
+            output_array = ga.array(name, env=env)
+            output_arrays.append(output_array)
+            output_arrays_dict[key] = output_array
+            self.temporary_rasters.append(name)
+        # We create the namedtuple dynamically, so we don't use the typed version.
+        self.all_array_results = namedtuple("arrays", output_arrays_dict.keys())(  # noqa: PYI024
+            *output_arrays_dict.values()
+        )
+        if len(output_arrays) == 1:
+            self.result = output_arrays[0]
+            return True
+        if len(output_arrays) > 1:
+            self.result = tuple(output_arrays)
+            return True
+        self.result = None
+        return False
 
 
 class ToolFunctionResolver:
@@ -148,10 +223,11 @@ class ToolResult:
         self._stderr = stderr
         self._text = None
         self._cached_json = None
+        self._arrays = {}
 
     @property
     def text(self) -> str | None:
-        """Text output as decoded string"""
+        """Text output as decoded string without leading and trailing whitespace"""
         if self._text is not None:
             return self._text
         if self._stdout is None:
@@ -209,7 +285,7 @@ class ToolResult:
         Empty or no output results in an empty list.
         """
         if not self.text:
-            # This provides consitent behavior with explicit separator including
+            # This provides consistent behavior with explicit separator including
             # a single space and no separator which triggers general whitespace
             # splitting which results in an empty list for an empty string.
             return []
@@ -219,10 +295,12 @@ class ToolResult:
 
     @property
     def stdout(self) -> str | bytes | None:
+        """Standard output (text output) without modifications"""
         return self._stdout
 
     @property
     def stderr(self) -> str | bytes | None:
+        """Standard error output (messages and errors) without modifications"""
         return self._stderr
 
     def _json_or_error(self) -> dict:
@@ -274,3 +352,10 @@ class ToolResult:
         if self._stderr is not None:
             parameters.append(f"stderr='{self._stderr}'")
         return f"{self.__class__.__name__}({', '.join(parameters)})"
+
+    @property
+    def arrays(self) -> dict:
+        return self._arrays
+
+    def set_arrays(self, arrays):
+        self._arrays = arrays
