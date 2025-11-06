@@ -40,6 +40,8 @@ except ImportError:
     # ga is present as well because that's the only import-time failure we expect.
     ga = None
 
+from .importexport import ImporterExporter
+
 
 class ParameterConverter:
     """Converts parameter values to strings and facilitates flow of the data."""
@@ -51,6 +53,7 @@ class ParameterConverter:
         self.stdin = None
         self.result = None
         self.temporary_rasters = []
+        self.import_export = None
 
     def process_parameters(self, kwargs):
         """Converts high level parameter values to strings.
@@ -81,6 +84,24 @@ class ParameterConverter:
             elif isinstance(value, StringIO):
                 kwargs[key] = "-"
                 self.stdin = value.getvalue()
+            elif self.import_export is None and ImporterExporter.is_recognized_file(
+                value
+            ):
+                self.import_export = True
+        if self.import_export is None:
+            self.import_export = False
+
+    def process_parameter_list(self, command):
+        """Converts or at least processes parameters passed as list of strings"""
+        for item in command:
+            splitted = item.split("=", maxsplit=1)
+            value = splitted[1] if len(splitted) > 1 else item
+            if self.import_export is None and ImporterExporter.is_recognized_file(
+                value
+            ):
+                self.import_export = True
+        if self.import_export is None:
+            self.import_export = False
 
     def translate_objects_to_data(self, kwargs, env):
         """Convert NumPy arrays to GRASS data"""
@@ -118,10 +139,11 @@ class ParameterConverter:
 
 
 class ToolFunctionResolver:
-    def __init__(self, *, run_function, env):
+    def __init__(self, *, run_function, env, allowed_prefix=None):
         self._run_function = run_function
         self._env = env
         self._names = None
+        self._allowed_prefix = allowed_prefix
 
     def get_tool_name(self, name, exception_type):
         """Parse attribute to GRASS display module. Attribute should be in
@@ -149,6 +171,12 @@ class ToolFunctionResolver:
             msg = (
                 f"Tool or attribute {name} ({tool_name}) not found"
                 " (check session setup and documentation for tool and attribute names)"
+            )
+            raise exception_type(msg)
+        if self._allowed_prefix and not name.startswith(self._allowed_prefix):
+            msg = (
+                f"Tool {name} ({tool_name}) is not suitable to run this way"
+                f" based on the allowed prefix ({self._allowed_prefix})"
             )
             raise exception_type(msg)
         return tool_name
@@ -207,7 +235,15 @@ class ToolFunctionResolver:
     def names(self):
         if self._names:
             return self._names
-        self._names = [name.replace(".", "_") for name in gs.get_commands()[0]]
+        if self._allowed_prefix:
+            dotted_allow_prefix = self._allowed_prefix.replace("_", ".")
+        else:
+            dotted_allow_prefix = None
+        self._names = [
+            name.replace(".", "_")
+            for name in gs.get_commands()[0]
+            if not dotted_allow_prefix or name.startswith(dotted_allow_prefix)
+        ]
         return self._names
 
 
@@ -343,6 +379,9 @@ class ToolResult:
 
     def __len__(self):
         return len(self._json_or_error())
+
+    def __iter__(self):
+        return iter(self._json_or_error())
 
     def __repr__(self):
         parameters = []
