@@ -115,7 +115,7 @@ def _import_raster_maps_from_gdal(
 
         # Set the color rules if present
         filename = row["filename"] + ".color"
-        if os.path.isfile(filename):
+        if Path(filename).is_file():
             try:
                 gs.run_command(
                     "r.colors", map=name, rules=filename, overwrite=gs.overwrite()
@@ -608,7 +608,7 @@ def import_stds(
                     "g.mapset",
                     mapset=old_env["MAPSET"],
                     project=old_env["LOCATION_NAME"],
-                    gisdbase=old_env["GISDBASE"],
+                    dbase=old_env["GISDBASE"],
                 )
             except CalledModuleError:
                 gs.warning(_("Switching to original location failed"))
