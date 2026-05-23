@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 16:40+0000\n"
+"POT-Creation-Date: 2026-05-23 15:57+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -336,6 +336,7 @@ msgstr ""
 #: ../general/g.version/main.c:134 ../misc/m.measure/main.c:87
 #: ../raster/r.describe/dumplist.c:38 ../raster/r.distance/report.c:211
 #: ../raster/r.distance/report.c:218 ../raster/r.distance/report.c:225
+#: ../raster/r.geomorphon/profile.c:261 ../raster/r.geomorphon/profile.c:274
 #: ../raster/r.info/main.c:147 ../raster/r.kappa/print_json.c:25
 #: ../raster/r.proj/main.c:481 ../raster/r.regression.line/main.c:101
 #: ../raster/r.regression.multi/main.c:197
@@ -4099,7 +4100,6 @@ msgstr ""
 msgid "Get text color from cell color value"
 msgstr ""
 
-#. GTC Count of window rows
 #. GTC Count of raster rows
 #. GTC Count of window rows
 #: ../display/d.rast.num/main.c:211 ../raster/r.thin/io.c:110
@@ -20684,6 +20684,10 @@ msgstr ""
 msgid "Internal error in %s()"
 msgstr ""
 
+#: ../raster/r.geomorphon/profile.c:283
+msgid "JSON nesting exceeds maximum depth"
+msgstr ""
+
 #: ../raster/r.grow.distance/main.c:149
 msgid "Generates a raster map containing distances to nearest raster features and/or the value of the nearest non-null cell."
 msgstr ""
@@ -29886,7 +29890,6 @@ msgstr ""
 msgid "Input raster must be of type CELL."
 msgstr ""
 
-#. GTC Count of window columns
 #. GTC Count of raster columns
 #. GTC Count of window columns
 #: ../raster/r.thin/io.c:112 ../raster/r.thin/io.c:188
