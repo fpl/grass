@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 16:40+0000\n"
+"POT-Creation-Date: 2026-05-30 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -14235,54 +14235,54 @@ msgstr ""
 msgid "Please choose '%s' and '%s' point."
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:639
+#: ../gui/wxpython/vnet/vnet_core.py:640
 #, python-brace-format
 msgid "Please choose '{0}' and '{1}' point."
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:648
+#: ../gui/wxpython/vnet/vnet_core.py:649
 msgid "Please choose at least two points."
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:930
+#: ../gui/wxpython/vnet/vnet_core.py:931
 #, python-format
 msgid ""
 "Input map '%s' for analysis was changed outside vector network analysis tool.\n"
 "Topology column may not correspond to changed situation."
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:935
+#: ../gui/wxpython/vnet/vnet_core.py:936
 msgid "Input changed outside"
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1004
+#: ../gui/wxpython/vnet/vnet_core.py:1005
 #, python-format
 msgid ""
 "Temporary map %s already exists.\n"
 "Do you want to continue in analysis and overwrite it?"
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1029
+#: ../gui/wxpython/vnet/vnet_core.py:1030
 msgid "Unable to use ctypes. \n"
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1030
-#: ../gui/wxpython/vnet/vnet_core.py:1053
+#: ../gui/wxpython/vnet/vnet_core.py:1031
+#: ../gui/wxpython/vnet/vnet_core.py:1054
 msgid "Snapping mode can not be activated."
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1063
+#: ../gui/wxpython/vnet/vnet_core.py:1064
 msgid "Do you really want to activate snapping and overwrite it?"
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1072
+#: ../gui/wxpython/vnet/vnet_core.py:1073
 #, python-format
 msgid ""
 "Temporary map '%s' was changed outside vector analysis tool.\n"
 "Do you really want to activate snapping and overwrite it? "
 msgstr ""
 
-#: ../gui/wxpython/vnet/vnet_core.py:1076
+#: ../gui/wxpython/vnet/vnet_core.py:1077
 msgid "Overwrite map"
 msgstr ""
 

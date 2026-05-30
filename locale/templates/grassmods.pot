@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-09 16:40+0000\n"
+"POT-Creation-Date: 2026-05-30 15:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -336,6 +336,7 @@ msgstr ""
 #: ../general/g.version/main.c:134 ../misc/m.measure/main.c:87
 #: ../raster/r.describe/dumplist.c:38 ../raster/r.distance/report.c:211
 #: ../raster/r.distance/report.c:218 ../raster/r.distance/report.c:225
+#: ../raster/r.geomorphon/profile.c:261 ../raster/r.geomorphon/profile.c:274
 #: ../raster/r.info/main.c:147 ../raster/r.kappa/print_json.c:25
 #: ../raster/r.proj/main.c:481 ../raster/r.regression.line/main.c:101
 #: ../raster/r.regression.multi/main.c:197
@@ -20682,6 +20683,10 @@ msgstr ""
 #: ../raster/r.geomorphon/pattern.c:229
 #, c-format
 msgid "Internal error in %s()"
+msgstr ""
+
+#: ../raster/r.geomorphon/profile.c:283
+msgid "JSON nesting exceeds maximum depth"
 msgstr ""
 
 #: ../raster/r.grow.distance/main.c:149
