@@ -8,13 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-30 15:58+0000\n"
+"POT-Creation-Date: 2026-11-07 19:38+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
@@ -9400,17 +9400,14 @@ msgid "Preliminary scene analysis:"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:126
-#, c-format
 msgid "* Desert index: %.2lf"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:127
-#, c-format
 msgid "* Snow cover: %.2lf %%"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:128
-#, c-format
 msgid "* Cloud cover: %.2lf %%"
 msgstr ""
 
@@ -9419,17 +9416,14 @@ msgid "* Temperature of clouds:"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:130
-#, c-format
 msgid "** Maximum: %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:131
-#, c-format
 msgid "** Mean (%s cloud): %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:133
-#, c-format
 msgid "** Minimum: %.2lf K"
 msgstr ""
 
@@ -9438,17 +9432,14 @@ msgid "Histogram cloud signature:"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:150
-#, c-format
 msgid "* Mean temperature: %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:151
-#, c-format
 msgid "* Standard deviation: %.2lf"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:152
-#, c-format
 msgid "* Skewness: %.2lf"
 msgstr ""
 
@@ -9458,17 +9449,14 @@ msgid "* Histogram classes: %d"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:165
-#, c-format
 msgid "* 98.75 percentile: %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:166
-#, c-format
 msgid "* 97.50 percentile: %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:167
-#, c-format
 msgid "* 83.50 percentile: %.2lf K"
 msgstr ""
 
@@ -9477,12 +9465,10 @@ msgid "Maximum temperature:"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:189
-#, c-format
 msgid "* Cold cloud: %.2lf K"
 msgstr ""
 
 #: ../imagery/i.landsat.acca/algorithm.c:190
-#, c-format
 msgid "* Warm cloud: %.2lf K"
 msgstr ""
 
@@ -12042,8 +12028,8 @@ msgstr ""
 msgid "Predict with a Support Vector Machine"
 msgstr ""
 
-#. GTC: SVM prediction input
 #. GTC: SVM training input
+#. GTC: SVM prediction input
 #: ../imagery/i.svm.predict/main.c:60 ../imagery/i.svm.train/main.c:62
 msgid "Maps with feature values (attributes)"
 msgstr ""
@@ -15087,6 +15073,7 @@ msgstr ""
 #: ../locale/scriptstrings/t.list_to_translate.c:11
 #: ../locale/scriptstrings/t.list_to_translate.c:17
 #: ../locale/scriptstrings/t.list_to_translate.c:19
+#: ../locale/scriptstrings/t.list_to_translate.c:21
 #: ../locale/scriptstrings/t.rast.list_to_translate.c:8
 #: ../locale/scriptstrings/t.rast.list_to_translate.c:15
 #: ../locale/scriptstrings/t.rast.list_to_translate.c:17
@@ -15128,6 +15115,10 @@ msgid "Columns to be printed to stdout"
 msgstr ""
 
 #: ../locale/scriptstrings/t.list_to_translate.c:16
+msgid "plain;Plain text output;line;Comma separated list of dataset names;json;JSON (JavaScript Object Notation);csv;CSV (Comma Separated Values)"
+msgstr ""
+
+#: ../locale/scriptstrings/t.list_to_translate.c:18
 #: ../locale/scriptstrings/t.rast.list_to_translate.c:16
 #: ../locale/scriptstrings/t.rast.univar_to_translate.c:12
 #: ../locale/scriptstrings/t.rast3d.list_to_translate.c:13
@@ -15138,7 +15129,7 @@ msgstr ""
 msgid "Field separator character between the output columns"
 msgstr ""
 
-#: ../locale/scriptstrings/t.list_to_translate.c:18
+#: ../locale/scriptstrings/t.list_to_translate.c:20
 #: ../locale/scriptstrings/t.sample_to_translate.c:11
 msgid "Print the column names as first row"
 msgstr ""
@@ -19748,7 +19739,6 @@ msgid "Writing output raster map..."
 msgstr ""
 
 #: ../raster/r.drain/main.c:721
-#, c-format
 msgid "direction read: %lf, neighbour found: %i"
 msgstr ""
 
@@ -25544,17 +25534,14 @@ msgid "Output raster map required"
 msgstr ""
 
 #: ../raster/r.random.surface/init.c:140
-#, c-format
 msgid "Distance value (%d): %lf must be >= 0.0"
 msgstr ""
 
 #: ../raster/r.random.surface/init.c:168
-#, c-format
 msgid "Exponent value (%lf) must be > 0.0"
 msgstr ""
 
 #: ../raster/r.random.surface/init.c:193
-#, c-format
 msgid "Flat value (%lf) must be less than distance value (%lf)"
 msgstr ""
 
@@ -26234,13 +26221,11 @@ msgstr ""
 
 #: ../raster/r.resamp.bspline/crosscorr.c:315
 #: ../vector/v.surf.bspline/crosscorr.c:301
-#, c-format
 msgid "Mean = %.5lf"
 msgstr ""
 
 #: ../raster/r.resamp.bspline/crosscorr.c:316
 #: ../vector/v.surf.bspline/crosscorr.c:302
-#, c-format
 msgid "Root Mean Square (RMS) = %.5lf"
 msgstr ""
 
@@ -26251,7 +26236,6 @@ msgstr ""
 
 #: ../raster/r.resamp.bspline/crosscorr.c:335
 #: ../vector/v.surf.bspline/crosscorr.c:321
-#, c-format
 msgid "The minimum value for the test (rms=%lf) was obtained with: lambda_i = %.3f"
 msgstr ""
 
@@ -28934,7 +28918,6 @@ msgid "Mode 2: integrated daily irradiation for a given day of the year"
 msgstr ""
 
 #: ../raster/r.sun/main.c:697
-#, c-format
 msgid "Using Linke constant: %lf"
 msgstr ""
 
@@ -28944,7 +28927,6 @@ msgid "Using Linke map <%s>"
 msgstr ""
 
 #: ../raster/r.sun/main.c:705
-#, c-format
 msgid "Using albedo constant: %lf"
 msgstr ""
 
@@ -28954,7 +28936,6 @@ msgid "Using albedo map <%s>"
 msgstr ""
 
 #: ../raster/r.sun/main.c:713
-#, c-format
 msgid "Using slope constant: %lf"
 msgstr ""
 
@@ -28964,7 +28945,6 @@ msgid "Using slope map <%s>"
 msgstr ""
 
 #: ../raster/r.sun/main.c:722
-#, c-format
 msgid "Using aspect constant: %lf"
 msgstr ""
 
@@ -29580,7 +29560,6 @@ msgid "Autogenerated random seed set to: %ld"
 msgstr ""
 
 #: ../raster/r.surf.fractal/main.c:93
-#, c-format
 msgid "Fractal dimension of %.2lf must be between 2 and 3."
 msgstr ""
 
@@ -33638,6 +33617,7 @@ msgid "Unknown extension (addon) source type '{0}'. Please report this to the gr
 msgstr ""
 
 #: ../scripts/g.extension/g.extension.py:1976
+#: ../scripts/g.extension/testsuite/test_addons_download.py:188
 msgid "Path to the source code:"
 msgstr ""
 
@@ -47092,7 +47072,6 @@ msgid "Cannot allocate memory for point"
 msgstr ""
 
 #: ../vector/v.vol.rst/user1.c:220
-#, c-format
 msgid "Can't insert %lf,%lf,%lf,%lf,%lf a=%d"
 msgstr ""
 
